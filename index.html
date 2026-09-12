@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Олімпійський Квіз</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        
+        <!-- Екран 1: Реєстрація -->
+        <div id="start-screen" class="screen active">
+            <h1>🏆 Олімпійський Квіз</h1>
+            <p>Перевір свої знання та виведи свій клас у лідери!</p>
+            
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="username">Ім'я та Прізвище:</label>
+                    <input type="text" id="username" placeholder="Введіть ваше ім'я" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="user-class">Ваш клас:</label>
+                    <select id="user-class" required>
+                        <option value="" disabled selected>Оберіть клас</option>
+                        <!-- Додайте ваші паралелі -->
+                        <option value="5-А">5-А</option>
+                        <option value="5-Б">5-Б</option>
+                        <option value="6-А">6-А</option>
+                        <option value="6-Б">6-Б</option>
+                        <option value="7-А">7-А</option>
+                        <option value="7-Б">7-Б</option>
+                        <option value="8-А">8-А</option>
+                        <option value="8-Б">8-Б</option>
+                        <option value="9-А">9-А</option>
+                        <option value="9-Б">9-Б</option>
+                        <option value="10-А">10-А</option>
+                        <option value="10-Б">10-Б</option>
+                        <option value="11-А">11-А</option>
+                        <option value="11-Б">11-Б</option>
+                        <option value="external_user">Зовнішній користувач</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Розпочати тест</button>
+            </form>
+        </div>
+
+        <!-- Екран 2: Запитання -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <span id="question-tracker">Питання 1 з 5</span>
+                <span id="timer">⏱️ 00:00</span>
+            </div>
+
+            <h2 id="question-text">Текст запитання...</h2>
+
+            <div id="options-container" class="options-grid">
+                <!-- Варіанти відповідей будуть додані через JS -->
+            </div>
+        </div>
+
+        <!-- Екран 3: Результат -->
+        <div id="result-screen" class="screen">
+            <h2>🥇 Вітаємо!</h2>
+            <p>Ви успішно пройшли Олімпійський квіз.</p>
+            
+            <div class="score-card">
+                <p>Ваш результат:</p>
+                <div id="final-score">0 / 0</div>
+                <p id="time-taken">Час: 0 сек</p>
+            </div>
+
+            <p id="status-message">Надсилання результату в систему...</p>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
