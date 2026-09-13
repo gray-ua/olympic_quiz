@@ -102,9 +102,9 @@ function sendResultsToBackend(data) {
     console.log("Надсилання даних для 11 класу:", data);
     
     // Сюди 11 клас вставить свою URL-адресу сервера
-    const BACKEND_URL = "https://your-backend-server.com/api/submit";
+    const BACKEND_URL = "https://quiz-results-wvxl.onrender.com/api/submit";
 
-    /*
+    
     fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -118,10 +118,11 @@ function sendResultsToBackend(data) {
         statusMessage.textContent = "❌ Помилка збереження даних.";
         console.error(err);
     });
-    */
     
+    /*
     // Тимчасова заглушка до підключення 11 класу:
     setTimeout(() => {
         statusMessage.textContent = "✅ Результат збережено! (Режим розробки)";
     }, 1000);
+    */
 }
