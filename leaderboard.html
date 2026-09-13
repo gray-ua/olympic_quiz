@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Олімпійська Таблиця Лідерів</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .leaderboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .leaderboard-grid { grid-template-columns: 1fr; }
+        }
+        .leaderboard-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th { background-color: #f8f9fa; color: #333; }
+        .top-1 { font-weight: bold; background-color: #fff9e6; }
+        .top-2 { background-color: #f2f2f2; }
+        .top-3 { background-color: #fff5eb; }
+        .live-badge {
+            display: inline-block;
+            background: #e6ffed;
+            color: #22863a;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width: 900px; margin: 0 auto; padding: 20px;">
+        <h1 style="text-align:center;">🏆 Олімпійський Залік — Таблиця Лідерів</h1>
+        <p style="text-align:center;">Оновлюється в реальному часі <span class="live-badge">🟢 LIVE</span></p>
+
+        <div class="leaderboard-grid">
+            <!-- Особистий залік -->
+            <div class="leaderboard-card">
+                <h2>🥇 Топ-10 Учнів Школи</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ім'я</th>
+                            <th>Клас</th>
+                            <th>Бали</th>
+                            <th>Час</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-table-body">
+                        <tr><td colspan="5">Завантаження даних...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Командний залік класів -->
+            <div class="leaderboard-card">
+                <h2>🏫 Рейтинг Класів (Середній бал)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Клас</th>
+                            <th>Сер. бал</th>
+                        </tr>
+                    </thead>
+                    <tbody id="classes-table-body">
+                        <tr><td colspan="3">Завантаження даних...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/leaderboard.js"></script>
+</body>
+</html>
