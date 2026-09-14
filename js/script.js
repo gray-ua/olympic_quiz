@@ -69,7 +69,7 @@ function selectOption(selectedIndex) {
     }
 
     currentQuestionIndex++;
-    if (currentQuestionIndex < question.length) {
+    if (currentQuestionIndex < questions.length) {
         loadQuestion();
     } else {
         finishQuiz();
