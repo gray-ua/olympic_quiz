@@ -50,7 +50,7 @@ function startTimer() {
 function loadQuestion() {
     const q = questions[currentQuestionIndex];
     questionText.textContent = q.question;
-    questionTracker.textContent = `Питання ${currentQuestionIndex + 1} з ${question.length}`;
+    questionTracker.textContent = `Питання ${currentQuestionIndex + 1} з ${questions.length}`;
     
     optionsContainer.innerHTML = "";
     q.options.forEach((option, index) => {
