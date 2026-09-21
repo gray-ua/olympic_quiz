@@ -7,6 +7,8 @@ let userData = { name: "", class: "" };
 let startTime = 0;
 let timerInterval = null;
 let totalTimeSeconds = 0;
+let questionsShown = 20;
+
 
 // DOM елементи
 const startScreen = document.getElementById("start-screen");
@@ -46,11 +48,26 @@ function startTimer() {
     }, 1000);
 }
 
+// Функція для отримання N випадкових питань з банку
+function getRandomQuestions(allQuestions, count = 20) {
+    // Створюємо копію масиву, щоб не змінювати оригінальний банк питань
+    const shuffled = [...allQuestions];
+    
+    // Алгоритм Фішера — Йейтса для якісного перемішування
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    
+    // Повертаємо перші `count` елементів (за замовчуванням 20)
+    return shuffled.slice(0, count);
+}
+
 // Завантаження питання
 function loadQuestion() {
-    const q = questions[currentQuestionIndex];
+    const q = getRandomQuestions(questions);
     questionText.textContent = q.question;
-    questionTracker.textContent = `Питання ${currentQuestionIndex + 1} з ${questions.length}`;
+    questionTracker.textContent = `Питання ${currentQuestionIndex + 1} з ${q.length}`;
     
     optionsContainer.innerHTML = "";
     q.options.forEach((option, index) => {
@@ -69,7 +86,7 @@ function selectOption(selectedIndex) {
     }
 
     currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
+    if (currentQuestionIndex < questionsShown) {
         loadQuestion();
     } else {
         finishQuiz();
