@@ -89,7 +89,7 @@ input:focus, select:focus {
     border: none;
     border-radius: 8px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
     margin-top: 10px;
@@ -100,7 +100,7 @@ input:focus, select:focus {
 }
 
 .btn:active {
-    transform: scale(0.99);
+    transform: scale(0.50);
 }
 
 /* Шапка квізу */
@@ -111,16 +111,15 @@ input:focus, select:focus {
     margin-bottom: 20px;
     padding-bottom: 12px;
     border-bottom: 2px solid #FBEFEF;
-    font-weight: 600;
+    font-weight: bold;
     color: #8C7B95;
 }
 
 /* Сітка варіантів відповідей */
 .options-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 12px;
-    margin-bottom: 20px;
 }
 
 .option-btn {
@@ -132,7 +131,7 @@ input:focus, select:focus {
     color: #5A4B62;
     cursor: pointer;
     transition: all 0.2s;
-    text-align: center;
+    text-align: left;
 }
 
 .option-btn:hover {
@@ -153,7 +152,7 @@ input:focus, select:focus {
 
 #final-score {
     font-size: 38px;
-    font-weight: 700;
+    font-weight: bold;
     color: #C5B3D3;
     margin: 8px 0;
 }
