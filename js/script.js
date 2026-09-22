@@ -1,3 +1,72 @@
+// Заборона контекстного меню (правої кнопки миші)
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Заборона гарячих клавіш (працює на всіх розкладках клавіатури)
+document.addEventListener('keydown', event => {
+    const isControlPressed = event.ctrlKey || event.metaKey;
+
+    // 1. Блокування комбінацій Ctrl + Shift + I / J / C (DevTools)
+    if (isControlPressed && event.shiftKey) {
+        if (
+            event.code === 'KeyI' || // Ctrl + Shift + I (DevTools)
+            event.code === 'KeyJ' || // Ctrl + Shift + J (Консоль)
+            event.code === 'KeyC'    // Ctrl + Shift + C (Інспектор елементів)
+        ) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+
+    // 2. Блокування стандартних комбінацій з Ctrl
+    if (isControlPressed && !event.shiftKey) {
+        if (
+            event.code === 'KeyU' || // Ctrl + U (Код сторінки)
+            event.code === 'KeyC' || // Ctrl + C (Копіювання)
+            event.code === 'KeyS' || // Ctrl + S (Збереження сторінки)
+            event.code === 'KeyA'    // Ctrl + A (Виділити все)
+        ) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+
+    // 3. Блокування клавіші F12
+    if (event.code === 'F12') {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+});
+
+let tabSwitchCount = 0;
+
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden && quizScreen.classList.contains("active")) {
+        tabSwitchCount++;
+        if (tabSwitchCount >= 2) {
+            alert("Ви залишали сторінку тесту! Тест завершено достроково.");
+            finishQuiz(); // Автоматичне завершення тесту
+        } else {
+            alert("Увага! Заборонено перемикати вкладки під час проходження квізу!");
+        }
+    }
+});
+
+setInterval(() => {
+    const startTime = performance.now();
+    debugger;
+    const endTime = performance.now();
+    
+    if (endTime - startTime > 100) {
+        document.body.innerHTML = `
+            <div style="text-align: center; margin-top: 100px; font-family: sans-serif;">
+                <h1 style="color: #e74c3c;">⚠️ Використання DevTools заблоковано!</h1>
+                <p>Проходження квізу з відкритими інструментами розробника заборонено.</p>
+                <button onclick="location.reload()" style="padding: 10px 20px; cursor: pointer;">Оновити сторінку</button>
+            </div>
+        `;
+    }
+}, 1000);
+
 import { questions } from './questions.js';
 
 // Змінні стану
@@ -175,43 +244,3 @@ function sendResultsToBackend(data) {
     */
 }
 
-// Заборона контекстного меню (правої кнопки миші)
-document.addEventListener('contextmenu', event => event.preventDefault());
-
-// Заборона гарячих клавіш копіювання та перегляду коду (працює на ВСІХ розкладках)
-document.addEventListener('keydown', event => {
-    // Check if Ctrl (Windows/Linux) or Cmd (Mac) is pressed
-    const isControlPressed = event.ctrlKey || event.metaKey;
-
-    if (isControlPressed) {
-        // event.code перевіряє фізичні клавіші (KeyU, KeyC, KeyS, KeyA)
-        if (
-            event.code === 'KeyU' || // Ctrl + U (Код сторінки)
-            event.code === 'KeyC' || // Ctrl + C (Копіювання)
-            event.code === 'KeyS' || // Ctrl + S (Збереження сторінки)
-            event.code === 'KeyA'    // Ctrl + A (Виділити все)
-        ) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    }
-
-    // Також заблокуємо F12 (Інструменти розробника)
-    if (event.code === 'F12') {
-        event.preventDefault();
-    }
-});
-
-let tabSwitchCount = 0;
-
-document.addEventListener("visibilitychange", () => {
-    if (document.hidden && quizScreen.classList.contains("active")) {
-        tabSwitchCount++;
-        if (tabSwitchCount >= 2) {
-            alert("Ви залишали сторінку тесту! Тест завершено достроково.");
-            finishQuiz(); // Автоматичне завершення тесту
-        } else {
-            alert("Увага! Заборонено перемикати вкладки під час проходження квізу!");
-        }
-    }
-});
