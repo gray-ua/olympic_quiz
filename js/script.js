@@ -1,3 +1,4 @@
+/*
 // Заборона контекстного меню (правої кнопки миші)
 document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -66,7 +67,7 @@ setInterval(() => {
         `;
     }
 }, 1000);
-
+*/
 import { questions } from './questions.js';
 
 // Змінні стану
