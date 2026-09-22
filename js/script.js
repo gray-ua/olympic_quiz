@@ -1,13 +1,13 @@
 import { questions } from './questions.js';
 
 // Змінні стану
+let activeQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let userData = { name: "", class: "" };
 let startTime = 0;
 let timerInterval = null;
 let totalTimeSeconds = 0;
-let questionsShown = 20;
 
 
 // DOM елементи
@@ -27,9 +27,17 @@ const statusMessage = document.getElementById("status-message");
 // Запуск тесту при відправці форми
 userForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    // Оновлюємо дані користувача (перезапис)
     userData.name = document.getElementById("username").value.trim();
     userData.class = document.getElementById("user-class").value;
 
+    // Обираємо 20 випадкових питань для поточного гравця
+    activeQuestions = getRandomQuestions(questions, 20);
+    currentQuestionIndex = 0;
+    score = 0;
+
+    // Перемикаємо екрани
     startScreen.classList.remove("active");
     quizScreen.classList.add("active");
 
@@ -39,7 +47,16 @@ userForm.addEventListener("submit", (e) => {
 
 // Таймер
 function startTimer() {
+    // Зупиняємо попередній таймер, якщо він існував
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    // Скидаємо накопичений час
+    totalTimeSeconds = 0;
     startTime = Date.now();
+
+    // Запускаємо новий інтервал
     timerInterval = setInterval(() => {
         totalTimeSeconds = Math.floor((Date.now() - startTime) / 1000);
         const mins = String(Math.floor(totalTimeSeconds / 60)).padStart(2, '0');
@@ -59,15 +76,16 @@ function getRandomQuestions(allQuestions, count = 20) {
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     
-    // Повертаємо перші `count` елементів (за замовчуванням 20)
+    // Повертаємо перші `count` елементів (за замовчуванням count = 20)
     return shuffled.slice(0, count);
 }
 
 // Завантаження питання
 function loadQuestion() {
-    const q = getRandomQuestions(questions);
+    const q = activeQuestions[currentQuestionIndex];
+
     questionText.textContent = q.question;
-    questionTracker.textContent = `Питання ${currentQuestionIndex + 1} з ${q.length}`;
+    questionTracker.textContent = `Питання ${currentQuestionIndex + 1} з ${activeQuestions.length}`;
     
     optionsContainer.innerHTML = "";
     q.options.forEach((option, index) => {
@@ -81,12 +99,12 @@ function loadQuestion() {
 
 // Обробка вибору відповіді
 function selectOption(selectedIndex) {
-    if (selectedIndex === questions[currentQuestionIndex].correct) {
+    if (selectedIndex === activeQuestions[currentQuestionIndex].correct) {
         score++;
     }
 
     currentQuestionIndex++;
-    if (currentQuestionIndex < questionsShown) {
+    if (currentQuestionIndex < activeQuestions.length) {
         loadQuestion();
     } else {
         finishQuiz();
@@ -100,7 +118,7 @@ function finishQuiz() {
     quizScreen.classList.remove("active");
     resultScreen.classList.add("active");
 
-    finalScoreDisplay.textContent = `${score} / ${questions.length}`;
+    finalScoreDisplay.textContent = `${score} / ${activeQuestions.length}`;
     timeTakenDisplay.textContent = `Час: ${totalTimeSeconds} сек.`;
 
     // Дані для відправки 11 класу
