@@ -178,9 +178,26 @@ function sendResultsToBackend(data) {
 // Заборона контекстного меню (правої кнопки миші)
 document.addEventListener('contextmenu', event => event.preventDefault());
 
-// Заборона гарячих клавіш копіювання та перегляду коду
+// Заборона гарячих клавіш копіювання та перегляду коду (працює на ВСІХ розкладках)
 document.addEventListener('keydown', event => {
-    if (event.ctrlKey && (event.key === 'c' || event.key === 'u' || event.key === 's' || event.key === 'a')) {
+    // Check if Ctrl (Windows/Linux) or Cmd (Mac) is pressed
+    const isControlPressed = event.ctrlKey || event.metaKey;
+
+    if (isControlPressed) {
+        // event.code перевіряє фізичні клавіші (KeyU, KeyC, KeyS, KeyA)
+        if (
+            event.code === 'KeyU' || // Ctrl + U (Код сторінки)
+            event.code === 'KeyC' || // Ctrl + C (Копіювання)
+            event.code === 'KeyS' || // Ctrl + S (Збереження сторінки)
+            event.code === 'KeyA'    // Ctrl + A (Виділити все)
+        ) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+
+    // Також заблокуємо F12 (Інструменти розробника)
+    if (event.code === 'F12') {
         event.preventDefault();
     }
 });
