@@ -106,6 +106,9 @@ function selectOption(selectedIndex) {
     currentQuestionIndex++;
     if (currentQuestionIndex < activeQuestions.length) {
         loadQuestion();
+        if (currentQuestionIndex == 14) {
+            warmupBackend();
+        }
     } else {
         finishQuiz();
     }
@@ -132,6 +135,15 @@ function finishQuiz() {
     sendResultsToBackend(payload);
 }
 
+function warmupBackend() {
+    const PING_URL = "https://quiz-results-wvxl.onrender.com/api/ping";
+    
+    // Фоновий запит, від якого ми не чекаємо відповіді у веб-інтерфейсі
+    fetch(PING_URL).catch(() => {
+        // Ігноруємо помилки, якщо вони виникнуть на етапі пігу
+    });
+}
+
 // Відправка даних на backend (11 клас)
 function sendResultsToBackend(data) {
     console.log("Надсилання даних для 11 класу:", data);
@@ -143,7 +155,8 @@ function sendResultsToBackend(data) {
     fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        keepalive: true
     })
     .then(response => response.json())
     .then(res => {
