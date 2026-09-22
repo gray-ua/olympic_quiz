@@ -174,3 +174,27 @@ function sendResultsToBackend(data) {
     }, 1000);
     */
 }
+
+// Заборона контекстного меню (правої кнопки миші)
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Заборона гарячих клавіш копіювання та перегляду коду
+document.addEventListener('keydown', event => {
+    if (event.ctrlKey && (event.key === 'c' || event.key === 'u' || event.key === 's' || event.key === 'a')) {
+        event.preventDefault();
+    }
+});
+
+let tabSwitchCount = 0;
+
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden && quizScreen.classList.contains("active")) {
+        tabSwitchCount++;
+        if (tabSwitchCount >= 2) {
+            alert("Ви залишали сторінку тесту! Тест завершено достроково.");
+            finishQuiz(); // Автоматичне завершення тесту
+        } else {
+            alert("Увага! Заборонено перемикати вкладки під час проходження квізу!");
+        }
+    }
+});
