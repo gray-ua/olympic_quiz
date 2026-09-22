@@ -1,4 +1,3 @@
-/*
 // Заборона контекстного меню (правої кнопки миші)
 document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -67,7 +66,6 @@ setInterval(() => {
         `;
     }
 }, 1000);
-*/
 
 import { questions } from './questions.js';
 
@@ -207,7 +205,7 @@ function finishQuiz() {
 }
 
 function warmupBackend() {
-    const PING_URL = "https://quiz-results-wvxl.onrender.com/api/ping";
+    const PING_URL = "https://my_serverurl/api/ping";
     
     // Фоновий запит, від якого ми не чекаємо відповіді у веб-інтерфейсі
     fetch(PING_URL).catch(() => {
@@ -220,14 +218,15 @@ function sendResultsToBackend(data) {
     console.log("Надсилання даних для 11 класу:", data);
     
     // Сюди 11 клас вставить свою URL-адресу сервера
-    const BACKEND_URL = "https://quiz-results-wvxl.onrender.com/api/submit";
+    const BACKEND_URL = "https://my_serverurl/api/submit";
 
     
     fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-       // keepalive: true
+        // keepalive: true
+        // Однак деякі браузери при keepalive обмежують розміри заголовків і можуть відхилити запит до Render.
     })
     .then(response => response.json())
     .then(res => {
