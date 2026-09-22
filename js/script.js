@@ -227,7 +227,7 @@ function sendResultsToBackend(data) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-        keepalive: true
+       // keepalive: true
     })
     .then(response => response.json())
     .then(res => {
