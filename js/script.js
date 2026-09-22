@@ -101,6 +101,9 @@ userForm.addEventListener("submit", (e) => {
     // Оновлюємо дані користувача (перезапис)
     userData.name = document.getElementById("username").value.trim();
     userData.class = document.getElementById("user-class").value;
+    
+    // Піднімаємо бд на початку
+    warmupBackend();
 
     // Обираємо 20 випадкових питань для поточного гравця
     activeQuestions = getRandomQuestions(questions, 20);
@@ -176,9 +179,9 @@ function selectOption(selectedIndex) {
     currentQuestionIndex++;
     if (currentQuestionIndex < activeQuestions.length) {
         loadQuestion();
-        if (currentQuestionIndex == 14) {
-            warmupBackend();
-        }
+        //if (currentQuestionIndex == 14) {
+        //warmupBackend();
+        //}
     } else {
         finishQuiz();
     }
