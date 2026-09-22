@@ -209,7 +209,7 @@ function finishQuiz() {
 }
 
 function warmupBackend() {
-    const PING_URL = "https://https://quiz-results-wvxl.onrender.com/api/ping";
+    const PING_URL = "https://quiz-results-wvxl.onrender.com/api/ping";
     
     // Фоновий запит, від якого ми не чекаємо відповіді у веб-інтерфейсі
     fetch(PING_URL).catch(() => {
@@ -222,7 +222,7 @@ function sendResultsToBackend(data) {
     console.log("Надсилання даних для 11 класу:", data);
     
     // Сюди 11 клас вставить свою URL-адресу сервера
-    const BACKEND_URL = "https://https://quiz-results-wvxl.onrender.com/api/submit";
+    const BACKEND_URL = "https://quiz-results-wvxl.onrender.com/api/submit";
 
     
     fetch(BACKEND_URL, {
